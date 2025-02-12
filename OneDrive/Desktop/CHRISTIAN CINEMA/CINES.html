@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CHRISTAPP</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Roboto', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to right, #121212, #1a1a1a);
+            color: #e0e0e0;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(to right, #ff0000c0, #cc0000);
+            padding: 1.5rem 2rem;
+            text-align: center;
+            color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        header h1 {
+            font-size: 2rem;
+            margin: 0;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Search Bar */
+        .search-bar {
+            display: flex;
+            justify-content: center;
+            margin: 2rem auto;
+            gap: 0.5rem;
+            max-width: 800px;
+        }
+
+        .search-bar input {
+            width: 100%;
+            padding: 1rem;
+            font-size: 1.2rem;
+            border-radius: 50px;
+            border: 1px solid #444;
+            background: #252525;
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        .search-bar input:focus {
+            outline: none;
+            background: #333;
+            border-color: #ff0000c0;
+        }
+
+        .search-bar button {
+            padding: 1rem 1.5rem;
+            font-size: 1.2rem;
+            border-radius: 50px;
+            background: linear-gradient(to right, #ff0000, #cc0000);
+            color: white;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s ease;
+        }
+
+        .search-bar button:hover {
+            background: linear-gradient(to right, #cc0000, #ff0000);
+            transform: scale(1.05);
+        }
+
+        /* Trending Header */
+        #trendingHeader {
+            text-align: center;
+            margin: 2rem 0;
+        }
+
+        #trendingHeader h2 {
+            font-size: 1.8rem;
+            color: #ff0000c0;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Movies Grid */
+        #movies {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            padding: 2rem;
+        }
+
+        .movie {
+            background: linear-gradient(to bottom, #252525, #1f1f1f);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .movie:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+        }
+
+        .movie img {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            border-bottom: 3px solid #ff0000c0;
+        }
+
+        .movie h3 {
+            font-size: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .movie p {
+            font-size: 1rem;
+            color: #aaa;
+            margin: 0.5rem 0 1.5rem;
+        }
+
+        .movie .watch-button {
+            background: linear-gradient(to right, #ff0000, #cc0000);
+            padding: 0.8rem 1.5rem;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .movie .watch-button:hover {
+            background: linear-gradient(to right, #cc0000, #ff0000);
+            transform: scale(1.1);
+        }
+
+        .trailer iframe {
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(to right, #1e1e1e, #252525);
+            padding: 1.5rem;
+            text-align: center;
+            color: #aaa;
+            font-size: 0.9rem;
+            border-top: 2px solid #ff0000c0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Cinema Chronicles by <b>Christian</b></h1>
+    </header>
+
+    <div class="search-bar">
+        <input type="text" id="search" placeholder="Search for a movie...">
+        <button id="searchButton">Search</button>
+    </div>
+
+    <div id="trendingHeader">
+        <h2>Trending Movies</h2>
+    </div>
+
+    <div id="movies"></div>
+
+    <footer>
+        <p>&copy; 2025 CHRISTIAN AGYAPONG. All rights reserved.</p>
+    </footer>
+
+    <script src="CINEMA.js"></script>
+</body>
+<!-- </html> -->
+

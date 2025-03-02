@@ -81,3 +81,10 @@ function toggleTrailer(movieId) {
         trailerDiv.style.display = "none";
     }
 }
+
+
+
+
+
+
+

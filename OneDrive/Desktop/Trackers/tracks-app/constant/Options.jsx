@@ -1,27 +1,27 @@
 export const TypeList = [
   {
     name: 'Tablet',
-    icon: 'https://cdn-icons-png.flaticon.com/512/808/808412.png',
+    icon: 'https://cdn-icons-png.flaticon.com/128/2800/2800586.png',
   },
   {
     name: 'Syrup',
-    icon: 'https://cdn-icons-png.flaticon.com/512/3515/3515431.png',
+    icon: 'https://cdn-icons-png.flaticon.com/128/11496/11496783.png',
   },
   {
     name: 'Injection',
-    icon: 'https://cdn-icons-png.flaticon.com/512/2972/2972347.png',
+    icon: 'https://cdn-icons-png.flaticon.com/128/5341/5341565.png',
   },
   {
     name: 'Capsule',
-    icon: 'https://cdn-icons-png.flaticon.com/512/2784/2784445.png',
+    icon: 'https://cdn-icons-png.flaticon.com/128/2616/2616687.png',
   },
   {
     name: 'Cream',
-    icon: 'https://cdn-icons-png.flaticon.com/512/3176/3176363.png',
+    icon: 'https://cdn-icons-png.flaticon.com/128/4967/4967139.png',
   },
   {
     name: 'Ointment',
-    icon: 'https://cdn-icons-png.flaticon.com/512/3441/3441229.png',
+    icon: 'https://cdn-icons-png.flaticon.com/128/8565/8565014.png',
   },
 ];
 

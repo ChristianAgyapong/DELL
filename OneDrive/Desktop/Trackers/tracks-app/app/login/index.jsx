@@ -1,12 +1,12 @@
-import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import { View, Text, TextInput, TouchableOpacity, StyleSheet } from "react-native";
 import { useRouter } from "expo-router";
 import { setLocalStorage, getLocalStorage } from "../../service/Storage";
-import { Image, SafeAreaView, ActivityIndicator, useWindowDimensions } from "react-native";
-import * as Animatable from "react-native-animatable";
-import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
-import MaterialIcons from "react-native-vector-icons/MaterialIcons";
-import Colors from "../../constant/Colors";
-import { useState } from "react";
+import { Image, SafeAreaView, ActivityIndicator, useWindowDimensions } from 'react-native';
+import * as Animatable from 'react-native-animatable';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import Colors from '../../constant/Colors';
+import { useState } from 'react';
 
 export default function Login() {
   const router = useRouter();
@@ -34,7 +34,7 @@ export default function Login() {
           <ActivityIndicator size="large" color={Colors.PRIMARY} style={styles.loader} />
         )}
         <Image
-          source={require("../../assets/images/log1.jpg")}
+          source={require('../../assets/images/log1.jpg')}
           style={[styles.image, { width: width * 0.98 }]}
           onLoadEnd={() => setImageLoading(false)}
           onError={() => setImageLoading(false)}
@@ -77,7 +77,7 @@ export default function Login() {
           onPress={handleLogin}
           activeOpacity={0.8}
           accessibilityRole="button"
-          accessibilityLabel="Continue to sign-up or sign-in screen"
+          accessibilityLabel="Continue to sign in screen"
         >
           <Text style={styles.buttonText}>Continue</Text>
         </TouchableOpacity>
@@ -98,19 +98,19 @@ const styles = StyleSheet.create({
   },
   imageWrapper: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
     paddingTop: 10,
-    backgroundColor: "#fff",
-    position: "relative",
+    backgroundColor: '#fff',
+    position: 'relative',
   },
   loader: {
-    position: "absolute",
+    position: 'absolute',
     zIndex: 1,
   },
   image: {
-    height: "100%",
-    resizeMode: "contain",
+    height: '100%',
+    resizeMode: 'contain',
     borderRadius: 20,
   },
   bottomSection: {
@@ -119,20 +119,20 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
-    alignItems: "center",
+    alignItems: 'center',
   },
   iconTop: {
     marginBottom: 15,
   },
   heading: {
     fontSize: 26,
-    fontWeight: "bold",
-    color: "white",
-    textAlign: "center",
+    fontWeight: 'bold',
+    color: 'white',
+    textAlign: 'center',
   },
   subIconRow: {
-    flexDirection: "row",
-    alignItems: "flex-start",
+    flexDirection: 'row',
+    alignItems: 'flex-start',
     gap: 8,
     marginTop: 15,
   },
@@ -141,18 +141,18 @@ const styles = StyleSheet.create({
   },
   subheading: {
     fontSize: 16,
-    color: "white",
-    textAlign: "left",
+    color: 'white',
+    textAlign: 'left',
     lineHeight: 22,
     flex: 1,
   },
   button: {
     marginTop: 25,
-    backgroundColor: "white",
+    backgroundColor: 'white',
     paddingVertical: 12,
     paddingHorizontal: 32,
     borderRadius: 99,
-    shadowColor: "#000",
+    shadowColor: '#000',
     shadowOpacity: 0.1,
     shadowOffset: { width: 0, height: 4 },
     shadowRadius: 6,
@@ -160,15 +160,15 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     fontSize: 18,
-    fontWeight: "bold",
+    fontWeight: 'bold',
     color: Colors.PRIMARY,
   },
   note: {
-    color: "white",
+    color: 'white',
     marginTop: 12,
-    textAlign: "center",
+    textAlign: 'center',
     fontSize: 12,
     lineHeight: 16,
-    maxWidth: "90%",
+    maxWidth: '90%',
   },
 });

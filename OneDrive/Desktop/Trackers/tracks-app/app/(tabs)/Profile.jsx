@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, StyleSheet, Image, ScrollView } from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet, Image, ScrollView, Alert, ActivityIndicator } from "react-native";
 import { useRouter } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import { useState, useEffect } from "react";
@@ -11,10 +11,12 @@ export default function Profile() {
     email: "",
   });
   const [logoutMsg, setLogoutMsg] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const getUserInfo = async () => {
       try {
+        setIsLoading(true);
         const info = await getLocalStorage("userDetail");
         if (info) {
           const parsedInfo = typeof info === "string" ? JSON.parse(info) : info;
@@ -22,6 +24,9 @@ export default function Profile() {
         }
       } catch (error) {
         console.error("Error loading user info:", error);
+        Alert.alert("Error", "Failed to load user information. Please try again.");
+      } finally {
+        setIsLoading(false);
       }
     };
     getUserInfo();
@@ -40,72 +45,114 @@ export default function Profile() {
     }
   };
 
+  const menuItems = [
+    {
+      title: "Add New Medication",
+      icon: "add-circle-outline",
+      route: "/add-new-medication",
+      backgroundColor: "#e6f0ff",
+      iconColor: "#007BFF",
+    },
+    {
+      title: "My Medications",
+      icon: "medical-outline",
+      route: "/",
+      backgroundColor: "#e6f0ff",
+      iconColor: "#007BFF",
+    },
+    {
+      title: "History",
+      icon: "time-outline",
+      route: "/(tabs)/History",
+      backgroundColor: "#e6f0ff",
+      iconColor: "#007BFF",
+    },
+  ];
+
+  const handleMenuPress = (route) => {
+    router.push(route);
+  };
+
+  if (isLoading) {
+    return (
+      <View style={styles.loadingContainer}>
+        <ActivityIndicator size="large" color="#007BFF" />
+        <Text style={styles.loadingText}>Loading profile...</Text>
+      </View>
+    );
+  }
+
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
       <View style={styles.header}>
-        <Image
-          source={require("../../assets/images/smile4.jpg")}
-          style={styles.avatar}
-        />
+        <View style={styles.avatarContainer}>
+          <Image
+            source={require("../../assets/images/smile4.jpg")}
+            style={styles.avatar}
+          />
+          <View style={styles.onlineIndicator} />
+        </View>
         <View style={styles.profileInfo}>
           <Text style={styles.greeting}>
             Hello, {userInfo?.displayName || "Friend"} 👋
           </Text>
           <Text style={styles.subtitle}>Welcome to Health Tracker</Text>
-          <Text style={styles.email}>{userInfo?.email || ""}</Text>
+          {userInfo?.email && (
+            <Text style={styles.email}>{userInfo.email}</Text>
+          )}
         </View>
       </View>
 
       {logoutMsg ? (
-        <View style={{ padding: 16, alignItems: "center" }}>
-          <Text style={{ color: "red", fontSize: 16 }}>{logoutMsg}</Text>
+        <View style={styles.messageContainer}>
+          <Ionicons 
+            name={logoutMsg.includes("failed") ? "alert-circle" : "checkmark-circle"} 
+            size={20} 
+            color={logoutMsg.includes("failed") ? "#ff4757" : "#2ed573"} 
+          />
+          <Text style={[
+            styles.messageText,
+            { color: logoutMsg.includes("failed") ? "#ff4757" : "#2ed573" }
+          ]}>
+            {logoutMsg}
+          </Text>
         </View>
       ) : null}
 
       <View style={styles.menuContainer}>
-        <TouchableOpacity
-          style={styles.menuItem}
-          onPress={() => router.push("/add-new-medication")}
-        >
-          <View style={[styles.iconContainer, { backgroundColor: "#e6f0ff" }]}>
-            <Ionicons name="add-circle-outline" size={24} color="#007BFF" />
-          </View>
-          <Text style={styles.menuText}>Add New Medication</Text>
-          <Ionicons name="chevron-forward" size={24} color="#666" />
-        </TouchableOpacity>
+        <Text style={styles.sectionTitle}>Quick Actions</Text>
+        
+        {menuItems.map((item, index) => (
+          <TouchableOpacity
+            key={index}
+            style={[styles.menuItem, styles.menuItemShadow]}
+            onPress={() => handleMenuPress(item.route)}
+            activeOpacity={0.7}
+          >
+            <View style={[styles.iconContainer, { backgroundColor: item.backgroundColor }]}>
+              <Ionicons name={item.icon} size={24} color={item.iconColor} />
+            </View>
+            <Text style={styles.menuText}>{item.title}</Text>
+            <Ionicons name="chevron-forward" size={20} color="#007BFF" />
+          </TouchableOpacity>
+        ))}
 
         <TouchableOpacity
-          style={styles.menuItem}
-          onPress={() => router.push("/")}
-        >
-          <View style={[styles.iconContainer, { backgroundColor: "#e6f0ff" }]}>
-            <Ionicons name="medical-outline" size={24} color="#007BFF" />
-          </View>
-          <Text style={styles.menuText}>My Medications</Text>
-          <Ionicons name="chevron-forward" size={24} color="#666" />
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          style={styles.menuItem}
-          onPress={() => router.push("/(tabs)/History")}
-        >
-          <View style={[styles.iconContainer, { backgroundColor: "#e6f0ff" }]}>
-            <Ionicons name="time-outline" size={24} color="#007BFF" />
-          </View>
-          <Text style={styles.menuText}>History</Text>
-          <Ionicons name="chevron-forward" size={24} color="#666" />
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          style={[styles.menuItem, styles.logoutButton]}
+          style={[styles.menuItem, styles.logoutButton, styles.menuItemShadow]}
           onPress={handleLogout}
+          activeOpacity={0.7}
         >
           <View style={[styles.iconContainer, { backgroundColor: "#fff5f5" }]}>
             <Ionicons name="log-out-outline" size={24} color="#ff4757" />
           </View>
           <Text style={[styles.menuText, styles.logoutText]}>Logout</Text>
-          <Ionicons name="chevron-forward" size={24} color="#ff4757" />
+          <Ionicons name="chevron-forward" size={20} color="#ff4757" />
         </TouchableOpacity>
+      </View>
+
+      <View style={styles.footer}>
+        <Text style={styles.footerText}>Health Tracker v1.0</Text>
+        <Text style={styles.footerSubtext}>Stay healthy, stay happy! 💊</Text>
       </View>
     </ScrollView>
   );
@@ -114,37 +161,64 @@ export default function Profile() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#f6faff",
+    backgroundColor: "#f8fbff",
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#f8fbff",
+  },
+  loadingText: {
+    marginTop: 12,
+    fontSize: 16,
+    fontFamily: "Outfit-Medium",
+    color: "#666",
   },
   header: {
-    backgroundColor: "#fff",
-    padding: 20,
+    backgroundColor: "#ffffff",
+    padding: 24,
     paddingTop: 60,
-    borderBottomLeftRadius: 30,
-    borderBottomRightRadius: 30,
+    borderBottomLeftRadius: 32,
+    borderBottomRightRadius: 32,
     shadowColor: "#007BFF",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 10,
-    elevation: 5,
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.08,
+    shadowRadius: 12,
+    elevation: 6,
     alignItems: "center",
   },
-  avatar: {
-    width: 100,
-    height: 100,
-    borderRadius: 50,
+  avatarContainer: {
+    position: "relative",
     marginBottom: 16,
-    borderWidth: 3,
+  },
+  avatar: {
+    width: 110,
+    height: 110,
+    borderRadius: 55,
+    borderWidth: 4,
     borderColor: "#e6f0ff",
+  },
+  onlineIndicator: {
+    position: "absolute",
+    bottom: 8,
+    right: 8,
+    width: 20,
+    height: 20,
+    borderRadius: 10,
+    backgroundColor: "#2ed573",
+    borderWidth: 3,
+    borderColor: "#ffffff",
   },
   profileInfo: {
     alignItems: "center",
   },
   greeting: {
-    fontSize: 24,
+    fontSize: 26,
     fontFamily: "Outfit-Bold",
-    color: "#222",
+    color: "#1a1a1a",
     marginBottom: 8,
+    textAlign: "center",
   },
   subtitle: {
     fontSize: 18,
@@ -153,48 +227,93 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   email: {
-    fontSize: 16,
-    fontFamily: "Outfit-Medium",
+    fontSize: 15,
+    fontFamily: "Outfit-Regular",
     color: "#666",
-    marginBottom: 20,
+    marginBottom: 16,
   },
-  menuContainer: {
-    padding: 20,
-    marginTop: 20,
-  },
-  menuItem: {
+  messageContainer: {
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: "#fff",
+    justifyContent: "center",
+    backgroundColor: "#ffffff",
     padding: 16,
-    borderRadius: 16,
-    marginBottom: 12,
-    shadowColor: "#007BFF",
+    margin: 20,
+    borderRadius: 12,
+    shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.05,
     shadowRadius: 8,
     elevation: 2,
   },
+  messageText: {
+    fontSize: 16,
+    fontFamily: "Outfit-Medium",
+    marginLeft: 8,
+  },
+  menuContainer: {
+    padding: 20,
+    marginTop: 12,
+  },
+  sectionTitle: {
+    fontSize: 20,
+    fontFamily: "Outfit-Bold",
+    color: "#1a1a1a",
+    marginBottom: 16,
+    marginLeft: 4,
+  },
+  menuItem: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "#ffffff",
+    padding: 18,
+    borderRadius: 16,
+    marginBottom: 12,
+  },
+  menuItemShadow: {
+    shadowColor: "#007BFF",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.06,
+    shadowRadius: 10,
+    elevation: 3,
+  },
   iconContainer: {
-    width: 44,
-    height: 44,
-    borderRadius: 22,
+    width: 48,
+    height: 48,
+    borderRadius: 24,
     alignItems: "center",
     justifyContent: "center",
-    marginRight: 12,
+    marginRight: 16,
   },
   menuText: {
     flex: 1,
-    fontSize: 16,
+    fontSize: 17,
     fontFamily: "Outfit-SemiBold",
-    color: "#333",
+    color: "#1a1a1a",
   },
   logoutButton: {
     marginTop: 20,
     borderWidth: 1,
     borderColor: "#ffecee",
+    backgroundColor: "#fffbfb",
   },
   logoutText: {
     color: "#ff4757",
+  },
+  footer: {
+    alignItems: "center",
+    padding: 24,
+    marginTop: 20,
+  },
+  footerText: {
+    fontSize: 14,
+    fontFamily: "Outfit-Medium",
+    color: "#999",
+    marginBottom: 4,
+  },
+  footerSubtext: {
+    fontSize: 12,
+    fontFamily: "Outfit-Regular",
+    color: "#bbb",
   },
 });

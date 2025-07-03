@@ -3,177 +3,227 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>CHRISTAPP</title>
+  <title>Cinema Chronicles</title>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
   <style>
+    /* === General Styles === */
     body {
-      font-family: Arial, sans-serif;
+      font-family: 'Segoe UI', Arial, sans-serif;
       margin: 0;
       padding: 0;
-      background-color: #121212;
+      background: radial-gradient(ellipse at top left, #2d1a2e 0%, #18181c 100%);
       color: #fff;
+      min-height: 100vh;
     }
-
-    header {
-      background-color: #1e1e1e;
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      background: #18181c;
       padding: 1rem 2rem;
+      border-bottom: 2px solid #ff4b6e;
+    }
+    .navbar .logo {
+      font-size: 2rem;
+      color: #ff4b6e;
       display: flex;
-      justify-content: center;
       align-items: center;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      gap: 0.5rem;
     }
-
-    header h1 {
-      margin: 0;
-      font-size: 1.8rem;
-      color: #ff0000c0;
+    .nav-links .nav-btn {
+      background: #23232b;
+      color: #fff;
+      border: 2px solid #ff4b6e;
+      border-radius: 2rem;
+      padding: 0.4rem 1.2rem;
+      margin-left: 0.5rem;
+      cursor: pointer;
+      transition: .2s;
+    }
+    .nav-btn.active, .nav-btn:hover {
+      background: #ff4b6e;
+      color: #18181c;
+    }
+    .hero {
       text-align: center;
+      padding: 3rem 1rem;
+      background: linear-gradient(120deg, #2d1a2e 60%, #ff4b6e22 100%);
+      margin-bottom: 2rem;
+      border-radius: 0 0 2rem 2rem;
     }
-
+    .hero-title {
+      font-size: 2.8rem;
+      background: linear-gradient(90deg, #ff4b6e, #ffb86b);
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero-subtitle {
+      font-size: 1.2rem;
+      color: #e0e0e0;
+      margin-top: 0.5rem;
+    }
     .search-bar {
+      margin-top: 2rem;
       display: flex;
       justify-content: center;
-      margin-top: 2rem;
       flex-wrap: wrap;
       gap: 1rem;
     }
-
-    .search-bar input,
-    .search-bar select {
-      padding: 0.8rem;
-      font-size: 1rem;
-      border-radius: 4px;
-      border: 1px solid #444;
-      background-color: #333;
-      color: white;
-    }
-
-    .search-bar input {
-      width: 60%;
-    }
-
-    .search-bar button {
+    .search-bar input, .search-bar select {
       padding: 0.8rem 1.2rem;
-      font-size: 1rem;
-      border-radius: 4px;
-      background-color: #FF0000;
-      color: white;
-      cursor: pointer;
+      border-radius: 1.2rem;
       border: none;
+      background: #18181c;
+      color: #fff;
+      min-width: 200px;
     }
-
+    .search-bar button {
+      padding: 0.8rem 1.5rem;
+      border-radius: 1.2rem;
+      background: #ff4b6e;
+      border: none;
+      color: #fff;
+      font-weight: bold;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: .2s;
+    }
     .search-bar button:hover {
-      background-color: #cc0000;
+      background: #ffb86b;
+      color: #18181c;
     }
-
-    #trendingHeader {
+    .stats-row {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+      margin: 2rem 0;
+    }
+    .stat-card {
+      background: #23232b;
+      border: 2px solid #ff4b6e;
+      border-radius: 1.2rem;
+      padding: 1.2rem 2rem;
       text-align: center;
-      margin-top: 2rem;
+      box-shadow: 0 2px 12px #0002;
+      min-width: 150px;
     }
-
+    .stat-card i {
+      font-size: 2rem;
+      color: #ff4b6e;
+      margin-bottom: 0.5rem;
+    }
+    .stat-number {
+      font-size: 2rem;
+      font-weight: bold;
+    }
+    .stat-label {
+      color: #ffb86b;
+    }
+    /* === Movie Grid === */
     #movies {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(250px,1fr));
       gap: 1.5rem;
       padding: 2rem;
     }
-
     .movie {
       background: #1f1f1f;
-      border-radius: 8px;
+      border-radius: 1rem;
       overflow: hidden;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-      transition: transform 0.3s ease;
+      box-shadow: 0 2px 8px rgba(0,0,0,.3);
+      border: 2px solid #23232b;
+      transition: transform .3s, border-color .3s;
       text-align: center;
     }
-
     .movie:hover {
       transform: scale(1.05);
+      border-color: #ff4b6e;
     }
-
     .movie img {
       width: 100%;
       height: 300px;
       object-fit: cover;
     }
-
     .movie h3 {
-      font-size: 1.2rem;
-      margin: 0.5rem;
+      margin: 0.5rem 0;
       color: #fff;
     }
-
     .movie p {
-      font-size: 1rem;
+      margin: 0.2rem 0;
       color: #bbb;
-      margin: 0.3rem 0;
     }
-
-    .movie .buttons-row {
+    .buttons-row {
       display: flex;
       justify-content: center;
-      flex-wrap: wrap;
       gap: 0.5rem;
-      padding: 0.5rem;
+      padding-bottom: 0.5rem;
     }
-
     .watch-button {
-      background-color: #FF0000;
-      padding: 0.5rem 1rem;
-      color: white;
+      background: #ff4b6e;
+      color: #fff;
       border: none;
-      border-radius: 4px;
+      padding: 0.5rem 1rem;
+      border-radius: .8rem;
+      font-weight: bold;
       cursor: pointer;
+      transition: .2s;
     }
-
     .watch-button:hover {
-      background-color: #cc0000;
+      background: #ffb86b;
+      color: #18181c;
     }
-
-    .trailer {
-      margin-top: 1rem;
-    }
-
     .trailer iframe {
       width: 100%;
       height: 315px;
+      margin-top: 0.5rem;
+      border-radius: .5rem;
       border: none;
     }
-
     footer {
-      background-color: #1e1e1e;
+      background: #18181c;
       padding: 1rem 2rem;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      text-align: center;
+      border-top: 2px solid #ff4b6e;
     }
   </style>
 </head>
 <body>
-  <header>
-    <h1>Cinema Chronicles by <b>Christian</b></h1>
-  </header>
-
-  <div class="search-bar">
-    <input type="text" id="search" placeholder="Search for a movie...">
-    <button id="searchButton">Search</button>
-    <select id="genreSelect">
-      <option value="">🎭 Filter by Genre</option>
-    </select>
-    <button id="showFavoritesBtn">🎬 Show Favorites</button>
+  <div class="navbar">
+    <div class="logo"><i class="fas fa-film"></i> Cinema Chronicles</div>
+    <div class="nav-links">
+      <button class="nav-btn active" data-mode="trending">Trending</button>
+      <button class="nav-btn" data-mode="top_rated">Top Rated</button>
+      <button class="nav-btn" data-mode="upcoming">Upcoming</button>
+      <button class="nav-btn" data-mode="favorites">Favorites</button>
+    </div>
   </div>
 
-  <div id="trendingHeader">
-    <h2>Trending Movies</h2>
+  <div class="hero">
+    <div class="hero-title">Discover Amazing Movies</div>
+    <div class="hero-subtitle">Explore blockbusters, hidden gems, and timeless classics.</div>
+    <div class="search-bar">
+      <input id="search" placeholder="Search for a movie..." />
+      <button id="searchButton"><i class="fas fa-search"></i> Search</button>
+      <select id="genreSelect"><option value="">All Genres</option></select>
+      <select id="sortSelect">
+        <option value="trending">Most Popular</option>
+        <option value="top_rated">Top Rated</option>
+        <option value="upcoming">Upcoming</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="stats-row">
+    <div class="stat-card"><i class="fas fa-film"></i><div id="stat-movies" class="stat-number">0</div><div class="stat-label">Movies</div></div>
+    <div class="stat-card"><i class="fas fa-heart"></i><div id="stat-favorites" class="stat-number">0</div><div class="stat-label">Favorites</div></div>
+    <div class="stat-card"><i class="fas fa-clock"></i><div id="stat-views" class="stat-number">0</div><div class="stat-label">Viewed</div></div>
   </div>
 
   <div id="movies"></div>
 
-  <footer>
-    <p>&copy; 2025 Christian Agyapong. All rights reserved.</p>
-  </footer>
-
+  <footer>&copy; 2025 Christian Agyapong. All rights reserved.</footer>
   <script src="script.js"></script>
 </body>
 </html>

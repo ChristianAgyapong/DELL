@@ -193,7 +193,7 @@ showFavoritesBtn.addEventListener('click', async () => {
     moviesContainer.innerHTML = '<p style="text-align:center;">No favorites saved.</p>';
     return;
   }
-  moviesContainer.innerHTML = '<p style="text-align:center;">Loading favorites...</p>';
+  moviesContainer.innerHTML = '<p style="text-align:center;">Loading favorite...</p>';
   const favoriteMovies = await Promise.all(
     favoriteIds.map(id =>
       fetch(`${BASE_URL}/movie/${id}?api_key=${API_KEY}`).then(res => res.json())
